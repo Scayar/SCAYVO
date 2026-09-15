@@ -39,7 +39,7 @@
 
 ## شاهد
 
-[**▶ الجولة كاملة (MP4)**](docs/assets/walkthrough.mp4)
+[**▶ الجولة كاملة (MP4، نحو 90 ثانية)**](docs/assets/walkthrough.mp4)
 
 <p align="center">
   <img src="docs/assets/walkthrough.gif" alt="جولة SCAYVO: المخرج و Halo Supply" width="720" />

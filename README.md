@@ -35,7 +35,7 @@ Director lives on the **same Vite server** at `/__scayvo/`. Production builds do
 
 ## Watch it
 
-[**▶ Full walkthrough (MP4)**](docs/assets/walkthrough.mp4)
+[**▶ Full walkthrough (MP4, ~90s)**](docs/assets/walkthrough.mp4)
 
 <p align="center">
   <img src="docs/assets/walkthrough.gif" alt="SCAYVO walkthrough: Director + Halo Supply" width="720" />
