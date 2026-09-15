@@ -377,7 +377,17 @@ input:focus-visible {
   height: 42px;
   border-radius: 50%;
   margin-bottom: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
 }
+
+.stat-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.stat-icon.navy { color: #fff; }
 
 .stat-icon.ice { background: #d9e8ff; }
 .stat-icon.sky { background: #c5e0ff; }
@@ -557,10 +567,21 @@ input:focus-visible {
   margin: 0;
   padding: 4px 14px 14px;
   display: grid;
-  gap: 8px;
-  color: var(--muted);
+  gap: 10px;
+  color: var(--ink);
   font-size: 13px;
   font-weight: 600;
+}
+
+.keys li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.keys li span:first-child {
+  color: var(--muted);
 }
 
 .diag-card {
@@ -741,7 +762,6 @@ input:focus-visible {
 }
 
 @media (max-width: 520px) {
-  .stats { grid-template-columns: 1fr; }
   .stat strong { font-size: 20px; }
   .sidebar { padding: 12px; }
 }

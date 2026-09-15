@@ -365,22 +365,41 @@ export function App() {
 
         <section className="stats" aria-label="Session">
           <article className="stat">
-            <div className="stat-icon ice" aria-hidden="true" />
+            <div className="stat-icon ice" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="6" width="18" height="13" rx="2" />
+                <path d="M3 10h18" />
+              </svg>
+            </div>
             <strong>{current?.title ?? 'No scene'}</strong>
             <span>Live scene</span>
           </article>
           <article className="stat">
-            <div className="stat-icon sky" aria-hidden="true" />
+            <div className="stat-icon sky" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.5 6.5l1.5 1.5M16 16l1.5 1.5M17.5 6.5 16 8M8 16l-1.5 1.5" />
+              </svg>
+            </div>
             <strong>{state.route || '/'}</strong>
             <span>Route</span>
           </article>
           <article className="stat">
-            <div className="stat-icon navy" aria-hidden="true" />
+            <div className="stat-icon navy" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 21s7-4.4 7-10a7 7 0 1 0-14 0c0 5.6 7 10 7 10z" />
+                <circle cx="12" cy="11" r="2.2" />
+              </svg>
+            </div>
             <strong>{LABELS[state.connection]}</strong>
             <span>Connection</span>
           </article>
           <article className="stat">
-            <div className="stat-icon mint" aria-hidden="true" />
+            <div className="stat-icon mint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M8 7h13M8 12h13M8 17h13M3 7h.01M3 12h.01M3 17h.01" />
+              </svg>
+            </div>
             <strong>{scenes.length}</strong>
             <span>Cues in deck</span>
           </article>
@@ -449,25 +468,36 @@ export function App() {
             </header>
             <ul className="keys">
               <li>
-                <kbd>1</kbd>–<kbd>9</kbd> Scene
+                <span>Jump to scene</span>
+                <span>
+                  <kbd>1</kbd>–<kbd>9</kbd>
+                </span>
               </li>
               <li>
-                <kbd>←</kbd> <kbd>→</kbd> Prev / next
+                <span>Previous / next</span>
+                <span>
+                  <kbd>←</kbd> <kbd>→</kbd>
+                </span>
               </li>
               <li>
-                <kbd>Space</kbd> Replay
+                <span>Replay</span>
+                <kbd>Space</kbd>
               </li>
               <li>
-                <kbd>R</kbd> Reset
+                <span>Reset</span>
+                <kbd>R</kbd>
               </li>
               <li>
-                <kbd>D</kbd> Film
+                <span>Film mode</span>
+                <kbd>D</kbd>
               </li>
               <li>
-                <kbd>/</kbd> Search
+                <span>Search cues</span>
+                <kbd>/</kbd>
               </li>
               <li>
-                <kbd>Esc</kbd> Exit film
+                <span>Exit film</span>
+                <kbd>Esc</kbd>
               </li>
             </ul>
           </div>
