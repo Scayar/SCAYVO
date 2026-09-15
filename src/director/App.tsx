@@ -196,25 +196,37 @@ export function App() {
 
   if (!boot) {
     return (
-      <main className="shell">
+      <main className="shell boot-missing">
+        <span className="mark" aria-hidden="true" />
+        <p className="brand">Scayvo</p>
+        <h1>Director</h1>
         <p>Director bootstrap is missing. Restart `scayvo dev` on localhost.</p>
       </main>
     );
   }
 
+  const lamp = (
+    <span className={`lamp ${state.connection}`} data-connection={state.connection}>
+      <i />
+      {LABELS[state.connection]}
+    </span>
+  );
+
   if (film) {
     return (
       <main className="film" data-mode="film">
+        <span className="film-giant" aria-hidden="true">
+          {current?.hotkey ?? '–'}
+        </span>
         <header className="film-top">
-          <span className={`pill ${state.connection}`} data-connection={state.connection}>
-            {LABELS[state.connection]}
-          </span>
+          {lamp}
           <button className="text-btn" onClick={() => setFilm(false)}>
             Exit film
           </button>
         </header>
         <p className="film-kicker">{current?.hotkey ? `Scene ${current.hotkey}` : 'Scene'}</p>
         <h1 className="film-title">{current?.title ?? 'No scene'}</h1>
+        {current?.id ? <p className="film-id">{current.id}</p> : null}
         <div className="film-actions">
           <button disabled={currentIndex <= 0} onClick={() => sendCommand('SCENE_APPLY', order[currentIndex - 1])}>
             Previous
@@ -235,21 +247,23 @@ export function App() {
 
   return (
     <main className="shell">
-      <header className="top">
-        <div>
-          <p className="brand">SCAYVO</p>
-          <h1>{boot.projectId}</h1>
+      <header className="mast">
+        <div className="mast-brand">
+          <span className="mark" aria-hidden="true" />
+          <div>
+            <p className="brand">Scayvo</p>
+            <h1>{boot.projectId}</h1>
+          </div>
         </div>
         <div className="meta">
-          <span className={`pill ${state.connection}`} data-connection={state.connection}>
-            {LABELS[state.connection]}
-          </span>
+          {lamp}
           <span className="route" data-route={state.route}>
             {state.route || '/'}
           </span>
         </div>
       </header>
 
+      <p className="sheet-kicker">Cue sheet</p>
       <ol className="scenes">
         {scenes.map((scene, index) => {
           const active = scene.id === state.sceneId && state.connection === 'active';
@@ -280,83 +294,86 @@ export function App() {
         </div>
       ) : null}
 
-      <footer className="actions">
-        <button disabled={currentIndex <= 0} data-action="prev" onClick={() => sendCommand('SCENE_APPLY', order[currentIndex - 1])}>
-          Previous
-        </button>
-        <button
-          disabled={currentIndex < 0 || currentIndex >= order.length - 1}
-          data-action="next"
-          onClick={() => sendCommand('SCENE_APPLY', order[currentIndex + 1])}
-        >
-          Next
-        </button>
-        <button className="accent" data-action="replay" disabled={!state.sceneId} onClick={() => state.sceneId && sendCommand('SCENE_APPLY', state.sceneId)}>
-          Replay
-        </button>
-        <button data-action="reset" onClick={() => sendCommand('RESET')}>
-          Reset
-        </button>
+      <footer className="deck">
+        <div className="actions">
+          <button disabled={currentIndex <= 0} data-action="prev" onClick={() => sendCommand('SCENE_APPLY', order[currentIndex - 1])}>
+            Previous
+          </button>
+          <button
+            disabled={currentIndex < 0 || currentIndex >= order.length - 1}
+            data-action="next"
+            onClick={() => sendCommand('SCENE_APPLY', order[currentIndex + 1])}
+          >
+            Next
+          </button>
+          <button className="accent" data-action="replay" disabled={!state.sceneId} onClick={() => state.sceneId && sendCommand('SCENE_APPLY', state.sceneId)}>
+            Replay
+          </button>
+          <button data-action="reset" onClick={() => sendCommand('RESET')}>
+            Reset
+          </button>
+        </div>
+
+        <section className="toggles">
+          <label>
+            <input
+              type="checkbox"
+              checked={remoteDraft}
+              onChange={(e) => {
+                setRemoteDraft(e.target.checked);
+                sendControl('remote', e.target.checked);
+              }}
+            />
+            Remote mode in app
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={hideBadgeDraft}
+              onChange={(e) => {
+                setHideBadgeDraft(e.target.checked);
+                sendControl('badge', e.target.checked);
+              }}
+            />
+            Hide DEMO MODE badge
+          </label>
+          <button className="text-btn" onClick={() => setFilm(true)}>
+            Film mode (D)
+          </button>
+        </section>
+
+        <section className="diag">
+          <button className="text-btn" onClick={() => setDiagOpen((v) => !v)}>
+            {diagOpen ? 'Hide diagnostics' : 'Diagnostics'}
+          </button>
+          {diagOpen ? (
+            <div className="diag-panel" data-diagnostics="open">
+              {state.diagnostic ? (
+                <p>
+                  <strong>{state.diagnostic.code}</strong> {state.diagnostic.message}
+                  {state.diagnostic.fix ? <span className="fix">{state.diagnostic.fix}</span> : null}
+                </p>
+              ) : (
+                <p>No engine error. Unhandled in-scope requests appear below.</p>
+              )}
+              {state.unhandled.length === 0 ? (
+                <p className="muted">No blocked requests this session.</p>
+              ) : (
+                <ul>
+                  {state.unhandled.map((item) => (
+                    <li key={item.id}>
+                      {item.method} {item.path}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ) : null}
+        </section>
+
+        <p className="keys">1–9 scenes · ← → · space replay · R reset · D film</p>
+        <p className="tagline">Your next demo. One key away.</p>
       </footer>
-
-      <section className="toggles">
-        <label>
-          <input
-            type="checkbox"
-            checked={remoteDraft}
-            onChange={(e) => {
-              setRemoteDraft(e.target.checked);
-              sendControl('remote', e.target.checked);
-            }}
-          />
-          Remote mode in app
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={hideBadgeDraft}
-            onChange={(e) => {
-              setHideBadgeDraft(e.target.checked);
-              sendControl('badge', e.target.checked);
-            }}
-          />
-          Hide DEMO MODE badge
-        </label>
-        <button className="text-btn" onClick={() => setFilm(true)}>
-          Film mode (D)
-        </button>
-      </section>
-
-      <section className="diag">
-        <button className="text-btn" onClick={() => setDiagOpen((v) => !v)}>
-          {diagOpen ? 'Hide diagnostics' : 'Diagnostics'}
-        </button>
-        {diagOpen ? (
-          <div className="diag-panel" data-diagnostics="open">
-            {state.diagnostic ? (
-              <p>
-                <strong>{state.diagnostic.code}</strong> {state.diagnostic.message}
-                {state.diagnostic.fix ? <span className="fix">{state.diagnostic.fix}</span> : null}
-              </p>
-            ) : (
-              <p>No engine error. Unhandled in-scope requests appear below.</p>
-            )}
-            {state.unhandled.length === 0 ? (
-              <p className="muted">No blocked requests this session.</p>
-            ) : (
-              <ul>
-                {state.unhandled.map((item) => (
-                  <li key={item.id}>
-                    {item.method} {item.path}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ) : null}
-      </section>
-
-      <p className="tagline">Your next demo. One key away.</p>
     </main>
   );
 }

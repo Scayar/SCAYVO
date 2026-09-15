@@ -3,6 +3,7 @@ export type OverlayKind = 'applying' | 'recovery' | 'recovery-failed' | 'config-
 type hidden = null;
 
 let host: HTMLDivElement | null = null;
+let stylesInjected = false;
 
 export function showOverlay(kind: Exclude<OverlayKind, null>, message: string, detail?: string): void {
   ensureHost();
@@ -24,6 +25,7 @@ export function hideOverlay(): void {
 }
 
 export function showDemoBadge(visible: boolean, sceneTitle: string | null): void {
+  ensureStyles();
   let badge = document.getElementById('scayvo-demo-badge');
   if (!visible || !sceneTitle) {
     badge?.remove();
@@ -53,24 +55,63 @@ function label(kind: string): string {
   }
 }
 
+function ensureStyles(): void {
+  if (stylesInjected) return;
+  stylesInjected = true;
+  const style = document.createElement('style');
+  style.setAttribute('data-scayvo-ui', 'true');
+  style.textContent = `
+    #scayvo-overlay {
+      position: fixed; inset: 0; z-index: 2147483646;
+      display: grid; place-items: start center; padding-top: 11vh;
+      pointer-events: none;
+    }
+    #scayvo-overlay[hidden] { display: none; }
+    #scayvo-overlay .scayvo-overlay-card {
+      pointer-events: auto;
+      min-width: 280px; max-width: 440px;
+      background: #0c0c0a; color: #efe6d0;
+      border: 1px solid #2c2b24; border-left: 3px solid #d6ff32;
+      border-radius: 0; padding: 18px 20px 16px;
+      font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    }
+    #scayvo-overlay .scayvo-overlay-kicker {
+      margin: 0;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: #d6ff32;
+    }
+    #scayvo-overlay .scayvo-overlay-title {
+      margin: 8px 0 0;
+      font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+      font-size: 22px; font-weight: 400; font-style: italic; letter-spacing: -0.02em;
+    }
+    #scayvo-overlay .scayvo-overlay-detail {
+      margin: 8px 0 0;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 12px; color: #8c8878; line-height: 1.5;
+    }
+    #scayvo-overlay[data-kind="applying"] .scayvo-overlay-kicker { color: #d6ff32; }
+    #scayvo-overlay[data-kind="recovery-failed"] .scayvo-overlay-kicker,
+    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-kicker { color: #ff471a; }
+    #scayvo-overlay[data-kind="recovery-failed"] .scayvo-overlay-card,
+    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-card { border-left-color: #ff471a; }
+    #scayvo-demo-badge {
+      position: fixed; top: 10px; right: 10px; z-index: 2147483645;
+      background: #0c0c0a; color: #d6ff32; border: 1px solid #d6ff32; border-radius: 0;
+      padding: 6px 9px 5px;
+      font: 500 10px/1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      letter-spacing: .16em; text-transform: uppercase;
+    }
+  `;
+  document.documentElement.appendChild(style);
+}
+
 function ensureHost(): void {
+  ensureStyles();
   if (host) return;
   host = document.createElement('div');
   host.id = 'scayvo-overlay';
-  const style = document.createElement('style');
-  style.textContent = `
-    #scayvo-overlay { position: fixed; inset: 0; z-index: 2147483646; display: grid; place-items: start center; padding-top: 12vh; pointer-events: none; }
-    #scayvo-overlay[hidden] { display: none; }
-    #scayvo-overlay .scayvo-overlay-card { pointer-events: auto; min-width: 280px; max-width: 420px; background: #141821; color: #eef2f7; border: 1px solid #2a3344; border-radius: 16px; padding: 18px 20px; font-family: ui-sans-serif, system-ui, sans-serif; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
-    #scayvo-overlay .scayvo-overlay-kicker { margin: 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #7d8ba3; }
-    #scayvo-overlay .scayvo-overlay-title { margin: 8px 0 0; font-size: 18px; font-weight: 650; }
-    #scayvo-overlay .scayvo-overlay-detail { margin: 8px 0 0; font-size: 13px; color: #c3cad6; line-height: 1.45; }
-    #scayvo-overlay[data-kind="applying"] .scayvo-overlay-kicker { color: #6ea8ff; }
-    #scayvo-overlay[data-kind="recovery-failed"] .scayvo-overlay-kicker,
-    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-kicker { color: #f0a35b; }
-    #scayvo-demo-badge { position: fixed; top: 12px; right: 12px; z-index: 2147483645; background: #0e1116; color: #d7e3ff; border: 1px solid #3b82f6; border-radius: 999px; padding: 4px 10px; font: 700 11px/1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
-  `;
-  document.documentElement.appendChild(style);
   document.documentElement.appendChild(host);
 }
 
