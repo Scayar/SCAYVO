@@ -41,7 +41,7 @@ button {
 }
 
 button:disabled {
-  opacity: 0.34;
+  opacity: 0.42;
   cursor: not-allowed;
 }
 
@@ -404,11 +404,15 @@ input:focus-visible {
   padding: 12px 12px 10px;
   background: var(--stage);
   border: 1px solid var(--rule);
-  border-left: 3px solid var(--heat);
+  border-left: 3px solid var(--rule);
   font-family: var(--mono);
   font-size: 11px;
   line-height: 1.55;
   color: var(--paper);
+}
+
+.diag-panel:has(strong) {
+  border-left-color: var(--heat);
 }
 
 .diag-panel strong {
@@ -480,7 +484,8 @@ input:focus-visible {
   font-size: min(42vw, 280px);
   font-weight: 500;
   line-height: 0.8;
-  color: color-mix(in srgb, var(--tally) 14%, transparent);
+  color: var(--tally);
+  opacity: 0.2;
   pointer-events: none;
   user-select: none;
 }
