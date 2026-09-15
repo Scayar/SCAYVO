@@ -1,12 +1,5 @@
 <p align="center">
-  <img src="docs/assets/mark.svg" width="72" height="72" alt="SCAYVO" />
-</p>
-
-<h1 align="center">SCAYVO</h1>
-
-<p align="center">
-  <strong>Je volgende demo. Eén toets verwijderd.</strong><br />
-  Lokale scene-controller voor een draaiende React + Vite SPA.
+  <img src="docs/assets/logo.png" alt="SCAYVO — One key away" width="380" />
 </p>
 
 <p align="center">
@@ -24,11 +17,7 @@
   <img alt="npm" src="https://img.shields.io/badge/npm-geen%20publieke%20scayvo-e05645?style=flat-square" />
 </p>
 
-<p align="center">
-  <img src="docs/assets/banner.svg" alt="SCAYVO-banner" width="720" />
-</p>
-
-Definieer de demo één keer. Wissel routes, MSW-mocks en allowlisted storage met één toets — zonder rebuild, zonder volledige reload, zonder `localStorage.clear()`.
+Lokale scene-controller voor een draaiende React + Vite SPA. Definieer de demo één keer. Wissel routes, MSW-mocks en allowlisted storage met één toets — zonder rebuild, zonder volledige reload, zonder `localStorage.clear()`.
 
 Director draait op **dezelfde Vite-server** op `/__scayvo/`. Productie-builds bevatten geen controleroutes, worker of fixtures.
 
@@ -493,6 +482,6 @@ MIT. Lokaal ontwikkelhulpmiddel. Zet `/__scayvo/` niet op een gedeeld netwerk.
 </p>
 
 <p align="center">
-  <img src="docs/assets/mark.svg" width="48" alt="SCAYVO" /><br />
+  <img src="docs/assets/logo-mark.png" width="56" height="56" alt="SCAYVO" /><br />
   <sub>Gemaakt door <a href="https://scayar.com">Scayar</a> · Je volgende demo. Eén toets verwijderd.</sub>
 </p>

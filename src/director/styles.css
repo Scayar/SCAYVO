@@ -82,14 +82,18 @@ input:focus-visible {
 .logo {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: var(--navy);
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  width: 40px;
+  height: 40px;
   flex: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+.logo img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .brand {
@@ -660,9 +664,17 @@ input:focus-visible {
 
 .film-top {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-top: auto;
+}
+
+.film-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin-right: auto;
 }
 
 .film .lamp {

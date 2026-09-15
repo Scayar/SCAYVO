@@ -1,12 +1,5 @@
 <p align="center">
-  <img src="docs/assets/mark.svg" width="72" height="72" alt="SCAYVO mark" />
-</p>
-
-<h1 align="center">SCAYVO</h1>
-
-<p align="center">
-  <strong>Your next demo. One key away.</strong><br />
-  Local scene controller for a running React + Vite SPA.
+  <img src="docs/assets/logo.png" alt="SCAYVO — One key away" width="380" />
 </p>
 
 <p align="center">
@@ -24,11 +17,7 @@
   <img alt="npm" src="https://img.shields.io/badge/npm-do%20not%20install%20public%20scayvo-e05645?style=flat-square" />
 </p>
 
-<p align="center">
-  <img src="docs/assets/banner.svg" alt="SCAYVO banner" width="720" />
-</p>
-
-Define the demo once. Switch routes, MSW mocks, and allowlisted storage with a keypress — no rebuild, no full reload, no `localStorage.clear()`.
+Local scene controller for a running React + Vite SPA. Define the demo once. Switch routes, MSW mocks, and allowlisted storage with a keypress — no rebuild, no full reload, no `localStorage.clear()`.
 
 Director lives on the **same Vite server** at `/__scayvo/`. Production builds do not ship control routes, the worker, or fixtures.
 
@@ -545,6 +534,6 @@ Security: [SECURITY.md](SECURITY.md) or email the address above.
 If SCAYVO saves you a demo, a star or a coffee helps the next one ship.
 
 <p align="center">
-  <img src="docs/assets/mark.svg" width="48" alt="SCAYVO" /><br />
+  <img src="docs/assets/logo-mark.png" width="56" height="56" alt="SCAYVO" /><br />
   <sub>Made by <a href="https://scayar.com">Scayar</a> · Your next demo. One key away.</sub>
 </p>

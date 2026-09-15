@@ -1,12 +1,5 @@
 <p align="center">
-  <img src="docs/assets/mark.svg" width="72" height="72" alt="SCAYVO" />
-</p>
-
-<h1 align="center">SCAYVO</h1>
-
-<p align="center" dir="rtl" lang="ar">
-  <strong>عرضك الجاي. بمفتاح واحد.</strong><br />
-  وحدة تحكم مشهد محلية لتطبيق React + Vite شغال.
+  <img src="docs/assets/logo.png" alt="SCAYVO — One key away" width="380" />
 </p>
 
 <p align="center">
@@ -24,12 +17,8 @@
   <img alt="npm" src="https://img.shields.io/badge/npm-do%20not%20install%20public%20scayvo-e05645?style=flat-square" />
 </p>
 
-<p align="center">
-  <img src="docs/assets/banner.svg" alt="SCAYVO" width="720" />
-</p>
-
 <p dir="rtl" lang="ar" align="right">
-عرّف العرض مرة واحدة. بدّل المسارات وموكات MSW والتخزين المصرّح فيه بمفتاح — بدون إعادة بناء، بدون إعادة تحميل كاملة، وبدون <code>localStorage.clear()</code>.
+وحدة تحكم مشهد محلية لتطبيق React + Vite شغال. عرّف العرض مرة واحدة. بدّل المسارات وموكات MSW والتخزين المصرّح فيه بمفتاح — بدون إعادة بناء، بدون إعادة تحميل كاملة، وبدون <code>localStorage.clear()</code>.
 </p>
 
 <p dir="rtl" lang="ar" align="right">
@@ -599,6 +588,6 @@ MIT. أداة تطوير محلية. لا تعرض `/__scayvo/` على شبكة 
 </p>
 
 <p align="center">
-  <img src="docs/assets/mark.svg" width="48" alt="SCAYVO" /><br />
+  <img src="docs/assets/logo-mark.png" width="56" height="56" alt="SCAYVO" /><br />
   <sub>من <a href="https://scayar.com">Scayar</a> · عرضك الجاي. بمفتاح واحد.</sub>
 </p>

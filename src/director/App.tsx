@@ -212,7 +212,7 @@ export function App() {
     return (
       <main className="boot-missing">
         <span className="logo" aria-hidden="true">
-          S
+          <img src={`${import.meta.env.BASE_URL}logo-mark.png`} alt="" width={36} height={36} />
         </span>
         <p className="brand">SCAYVO</p>
         <h1>Director</h1>
@@ -235,6 +235,13 @@ export function App() {
           {current?.hotkey ?? '–'}
         </span>
         <header className="film-top">
+          <img
+            className="film-logo"
+            src={`${import.meta.env.BASE_URL}logo-mark.png`}
+            width={32}
+            height={32}
+            alt=""
+          />
           {lamp}
           <button className="text-btn" onClick={() => setFilm(false)}>
             Exit film
@@ -266,7 +273,7 @@ export function App() {
       <aside className="sidebar">
         <div className="brand-lockup">
           <span className="logo" aria-hidden="true">
-            S
+            <img src={`${import.meta.env.BASE_URL}logo-mark.png`} alt="" width={36} height={36} />
           </span>
           <div>
             <p className="brand">SCAYVO</p>

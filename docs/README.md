@@ -24,10 +24,9 @@ Open-source local scene controller for a running Vite + React SPA. MIT.
 | --- | --- |
 | [walkthrough.gif](assets/walkthrough.gif) | Short loop of Director + Halo Supply |
 | [walkthrough.mp4](assets/walkthrough.mp4) | Trimmed capture of Director + Halo Supply (~90s, light dashboard) |
-| [banner.svg](assets/banner.svg) | README hero |
-| [mark.svg](assets/mark.svg) | Square mark |
-| [social-preview.svg](assets/social-preview.svg) | GitHub social card (export PNG 1280×640) |
-| [social-preview.png](assets/social-preview.png) | Upload in Settings → General → Social preview |
+| [logo.png](assets/logo.png) | Full lockup (transparent) — README hero |
+| [logo-mark.png](assets/logo-mark.png) | App icon only — favicon, Director, footer |
+| [social-preview.png](assets/social-preview.png) | GitHub social card 1280×640 |
 
 ## Screenshots
 
