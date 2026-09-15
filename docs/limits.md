@@ -1,5 +1,7 @@
 # Limits (v0.1)
 
+**Languages:** [English](limits.md) · [Nederlands](limits.nl.md) · [العربية](limits.ar.md)
+
 SCAYVO is not a test platform and not a production control plane.
 
 ## State

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="200" viewBox="0 0 960 200" role="img" aria-label="SCAYVO">
+  <rect width="960" height="200" fill="#f3f6fb"/>
+  <rect width="960" height="200" fill="#153a75"/>
+  <circle cx="820" cy="-20" r="140" fill="#2b63e3" opacity="0.35"/>
+  <circle cx="900" cy="180" r="90" fill="#73b3ff" opacity="0.35"/>
+  <rect x="48" y="52" width="56" height="56" rx="16" fill="#ffffff"/>
+  <text x="76" y="91" text-anchor="middle" fill="#153a75" font-family="Plus Jakarta Sans, IBM Plex Sans, Arial, sans-serif" font-size="36" font-weight="700">S</text>
+  <text x="124" y="78" fill="#ffffff" font-family="Plus Jakarta Sans, IBM Plex Sans, Arial, sans-serif" font-size="36" font-weight="700">SCAYVO</text>
+  <text x="124" y="112" fill="#c9ddff" font-family="Plus Jakarta Sans, IBM Plex Sans, Arial, sans-serif" font-size="18" font-weight="500">Your next demo. One key away.</text>
+  <text x="48" y="164" fill="#eaf2ff" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="13">v0.1 · React + Vite · loopback only · keys 1-9 · Space replay</text>
+</svg>

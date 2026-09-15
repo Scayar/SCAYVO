@@ -1,5 +1,7 @@
 # Integrations
 
+**Languages:** [English](integrations.md) · [Nederlands](integrations.nl.md) · [العربية](integrations.ar.md)
+
 ## React + Vite SPA
 
 Supported environment: local Chromium, `base: '/'`, REST over `fetch`.

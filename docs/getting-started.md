@@ -1,6 +1,38 @@
 # Getting started
 
+**Languages:** [English](getting-started.md) · [Nederlands](getting-started.nl.md) · [العربية](getting-started.ar.md) · [Project README](../README.md)
+
 SCAYVO is a **local** development tool. Keep the Vite server on loopback. Do not expose `/__scayvo/` on a shared network.
+
+## Run Halo Supply on this machine
+
+From the **repository root**:
+
+```bash
+npm install
+npm run build
+npm install --prefix examples/demo
+npm run start --prefix examples/demo -- --host 127.0.0.1 --port 4173 --strictPort
+```
+
+Then open:
+
+- App: http://127.0.0.1:4173/dashboard
+- Director: http://127.0.0.1:4173/__scayvo/
+
+`npm run demo` starts the same Vite process but **does not forward** `--host` / `--port`. Playwright and this guide pin **4173**. If that port is taken, stop the other process; do not share it with Playwright (`reuseExistingServer` is off).
+
+Scripted scene apply (Vite already running; run from `examples/demo` so the CLI can read `.scayvo/runtime.json`):
+
+```bash
+cd examples/demo
+npx scayvo list
+npx scayvo run busy
+npx scayvo run payment-failed
+npx scayvo reset
+```
+
+`run` talks to the live session and exits only after `SCENE_APPLIED`. It does not start Vite and does not open a browser. There is no `--base-url` flag — host and token come from `.scayvo/runtime.json`.
 
 ## 1. Package
 

@@ -1,46 +1,268 @@
-# SCAYVO
+<p align="center">
+  <img src="docs/assets/mark.svg" width="72" height="72" alt="SCAYVO mark" />
+</p>
 
-Local scene controller for a running React + Vite app. Define the demo setup once, then switch and replay it with a keypress.
+<h1 align="center">SCAYVO</h1>
 
-**Your next demo. One key away.**
+<p align="center">
+  <strong>Your next demo. One key away.</strong><br />
+  Local scene controller for a running React + Vite SPA.
+</p>
 
-Switch routes, mock APIs, and restore demo state without rebuilding the setup between takes.
+<p align="center">
+  <a href="./README.md">English</a> ·
+  <a href="./README.nl.md">Nederlands</a> ·
+  <a href="./README.ar.md">العربية</a>
+</p>
 
-v0.1 controls **declared sources and registered adapters**. It does not claim “any state,” databases, SSR, cookies, IndexedDB, or production traffic.
+<p align="center">
+  <img alt="v0.1" src="https://img.shields.io/badge/v0.1-local%20only-153a75?style=flat-square" />
+  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D20.11-2b63e3?style=flat-square" />
+  <img alt="React + Vite" src="https://img.shields.io/badge/React%20%2B%20Vite-SPA-73b3ff?style=flat-square" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-eaf2ff?style=flat-square&labelColor=153a75" />
+  <img alt="npm" src="https://img.shields.io/badge/npm-do%20not%20install%20public%20scayvo-e05645?style=flat-square" />
+</p>
 
-The npm name `scayvo` is a working title. This repository does not publish to npm. Install a local tarball after `npm pack`.
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="SCAYVO banner" width="720" />
+</p>
 
-## What you get
+Define the demo once. Switch routes, MSW mocks, and allowlisted storage with a keypress — no rebuild, no full reload, no `localStorage.clear()`.
 
-- Scenes: title, order, route, allowlisted storage, REST mocks, custom adapter data
-- Director at `/__scayvo/` on the same Vite dev server
-- Keyboard remote (Director always; the app only after Remote mode)
-- Repeatable React remount with abortable generations
-- MSW in the browser, including JSON, fixtures, HTTP errors, delay, and network errors
-- CLI: `init`, `dev`, `list`, `run`, `reset`, `validate`
+Director lives on the **same Vite server** at `/__scayvo/`. Production builds do not ship control routes, the worker, or fixtures.
 
-Not in v0.1: global fake clock, Next.js/SSR, GraphQL, WebSockets, capture, cloud, AI, billing, visual scene editing.
+---
 
-## Install a local build
+## Watch it
 
-From this repository:
+[**▶ Full walkthrough (MP4)**](docs/assets/walkthrough.mp4)
+
+<p align="center">
+  <img src="docs/assets/walkthrough.gif" alt="SCAYVO walkthrough: Director + Halo Supply" width="720" />
+</p>
+
+<p align="center">
+  <a href="docs/assets/walkthrough.mp4">
+    <img src="docs/assets/director-busy.png" alt="SCAYVO Director — Growing business LIVE" width="920" />
+  </a>
+</p>
+
+---
+
+## Gallery
+
+<p align="center">
+  <img src="docs/assets/director-desktop.png" alt="Director desktop — Empty LIVE" width="920" />
+</p>
+
+| Director | Halo Supply demo |
+| :---: | :---: |
+| <img src="docs/assets/director-film.png" alt="Film mode" /> | <img src="docs/assets/halo-busy.png" alt="Busy dashboard $977" /> |
+| <img src="docs/assets/director-tablet.png" alt="Tablet Director" /> | <img src="docs/assets/halo-declined.png" alt="Payment declined" /> |
+| <img src="docs/assets/director-phone.png" alt="Phone Director" /> | <img src="docs/assets/halo-premium.png" alt="Premium account" /> |
+
+<p align="center">
+  <img src="docs/assets/halo-badge.png" alt="DEMO MODE badge on Halo Supply" width="720" />
+</p>
+
+---
+
+## Contents
+
+- [What it is](#what-it-is)
+- [Palette](#palette)
+- [What v0.1 does not do](#what-v01-does-not-do)
+- [Run the Halo Supply demo](#run-the-halo-supply-demo)
+- [Director](#director)
+- [Keyboard](#keyboard)
+- [Install into your app](#install-into-your-app)
+- [CLI](#cli)
+- [How a scene applies](#how-a-scene-applies)
+- [Network and storage](#network-and-storage)
+- [Tests (A→Z)](#tests-az)
+- [Repository map](#repository-map)
+- [Docs](#docs)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+
+---
+
+## What it is
+
+SCAYVO is a **loopback-only** director for demos:
+
+| Piece | What you get |
+| --- | --- |
+| Scenes | Title, order, route, allowlisted storage, REST mocks, custom adapter data |
+| Director | Light navy dashboard at `/__scayvo/` on the same Vite process |
+| Remote | Keys always work in Director; the **app** tab only after Remote mode |
+| React | Explicit remount + abortable generations (`context.signal`) |
+| Network | MSW in the browser: JSON, fixtures, HTTP errors, delay, network errors |
+| CLI | `init` · `dev` · `list` · `run` · `reset` · `validate` |
+
+v0.1 controls **declared sources and registered adapters only**. It does not claim “any state,” databases, SSR, cookies, IndexedDB, or production traffic.
+
+The public npm name `scayvo` is a working title. **This repository does not publish to npm.** Do not `npm install scayvo` from the registry. Pack a local tarball.
+
+```mermaid
+flowchart LR
+  subgraph vite ["Same Vite process on 127.0.0.1"]
+    App["Halo Supply SPA"]
+    Dir["Director /__scayvo/"]
+    WS["WebSocket /__scayvo/control"]
+    Worker["MSW worker"]
+  end
+  Dir --> WS
+  App --> WS
+  App --> Worker
+  CLI["npx scayvo run scene-id"] --> WS
+```
+
+---
+
+## Palette
+
+Director is navy + signal blue on ice paper. Halo Supply stays a separate dark storefront — it is the sample app, not the tool.
+
+<p align="center">
+  <img alt="navy" src="https://img.shields.io/badge/navy-%23153a75-153a75?style=for-the-badge&labelColor=153a75&color=153a75" />
+  <img alt="blue" src="https://img.shields.io/badge/blue-%232b63e3-2b63e3?style=for-the-badge&labelColor=2b63e3&color=2b63e3" />
+  <img alt="sky" src="https://img.shields.io/badge/sky-%2373b3ff-73b3ff?style=for-the-badge&labelColor=73b3ff&color=73b3ff" />
+  <img alt="ice" src="https://img.shields.io/badge/ice-%23eaf2ff-eaf2ff?style=for-the-badge&labelColor=eaf2ff&color=eaf2ff" />
+  <img alt="heat" src="https://img.shields.io/badge/heat-%23e05645-e05645?style=for-the-badge&labelColor=e05645&color=e05645" />
+</p>
+
+| Token | Hex | Where |
+| --- | --- | --- |
+| Navy | `#153a75` | Sidebar, film mode, primary CTA |
+| Signal blue | `#2b63e3` | Focus, links, live accents |
+| Sky | `#73b3ff` | Borders, glow, badge outline |
+| Ice | `#eaf2ff` | Metric cards, search, LIVE row |
+| Heat | `#e05645` | Reset, errors, recovery |
+| Paper | `#f3f6fb` | Director canvas |
+| Ink | `#122033` | Body text |
+
+Type: **Plus Jakarta Sans** (UI) + **IBM Plex Mono** (ids, shortcuts).
+
+---
+
+## What v0.1 does not do
+
+Global fake clock, Next.js/SSR, GraphQL, WebSocket mocks, capture, cloud, AI, billing, visual scene editors, OS-global hotkeys, PWA worker coexistence.
+
+---
+
+## Run the Halo Supply demo
+
+Node **≥ 20.11**. Stay on loopback.
 
 ```bash
+git clone https://github.com/Scayar/SCAYVO.git
+cd SCAYVO
+npm install
+npm run build
+npm install --prefix examples/demo
+npm run start --prefix examples/demo -- --host 127.0.0.1 --port 4173 --strictPort
+```
+
+Open:
+
+| Surface | URL |
+| --- | --- |
+| App | http://127.0.0.1:4173/ |
+| Director | http://127.0.0.1:4173/__scayvo/ |
+
+`examples/demo/vite.config.ts` already binds `127.0.0.1:4173`. Passing `--host 0.0.0.0` **disables** control routes.
+
+Halo Supply is a three-route storefront. Six scenes are driven by `fetch('/api/…')`, not by reading a scene id to pick hardcoded markup.
+
+| Key | Scene | What you should see |
+| --- | --- | --- |
+| `1` | Empty dashboard | 0 orders, **$0.00** |
+| `2` | Growing business | 3 orders, **$977.00** from the fixture (59900 + 12900 + 24900 cents) |
+| `3` | Slow API | Skeleton ~4s, then the same 3 orders |
+| `4` | Server error | Dashboard error from HTTP 500 (`demo_server_error`) |
+| `5` | Payment declined | Checkout. Toast only **after** Pay (`card_declined`) |
+| `6` | Premium account | Name Talal, plan `premium` |
+
+<p align="center">
+  <img src="docs/assets/halo-empty.png" alt="Empty dashboard" width="420" />
+  <img src="docs/assets/halo-busy.png" alt="Busy $977" width="420" />
+</p>
+<p align="center">
+  <img src="docs/assets/halo-slow.png" alt="Slow skeleton" width="280" />
+  <img src="docs/assets/halo-error.png" alt="Server error" width="280" />
+  <img src="docs/assets/halo-declined.png" alt="Declined toast" width="280" />
+</p>
+
+**Replay** (`Space`) on payment-failed clears the form and toast, then Pay fails again. **Reset** restores managed keys and the original route, then mounts **without** SCAYVO mocks. If there is no real backend, `/api/orders` may return HTML — that is honest normal mode, not a restore bug.
+
+---
+
+## Director
+
+Same origin as the app. Deep navy CTA, ice metric cards, cue sheet, transport, shortcut list.
+
+<p align="center">
+  <img src="docs/assets/director-diagnostics.png" alt="Director with diagnostics" width="920" />
+</p>
+
+| Control | Meaning |
+| --- | --- |
+| Cue sheet | Click a scene. Active row is ice + **LIVE** |
+| Replay scene | Re-prepares even the **current** scene |
+| Previous / Next | No wrap |
+| Reset | Baseline + normal mount, mocks off |
+| Remote mode in app | Numbers/arrows/Space in the **app** tab |
+| Hide DEMO MODE badge | Badge text stays `DEMO MODE` for tests |
+| Film mode (`D`) | Large take view. `Esc` exits |
+| Search (`/`) | Filter cues by title, id, or hotkey |
+| Diagnostics | Engine errors and blocked in-scope requests |
+
+Handshake: **Connected** after the app authenticates. **Active** only after `SCENE_APPLIED`. A socket connect alone is not success.
+
+If the last Director disconnects, mocks **stay**. They do not fall through to the real network.
+
+---
+
+## Keyboard
+
+Shortcuts ignore typing, IME, modifiers, and key repeat. They are page-level, not OS-global.
+
+| Key | Action |
+| --- | --- |
+| `1`–`9` | Scene by `order` |
+| `←` `→` | Previous / next, no wrap |
+| `Space` | Replay current scene |
+| `R` | Reset |
+| `D` | Film mode (Director) |
+| `/` | Focus scene search (Director) |
+| `Esc` | Exit film (Director); turn off Remote in the **app** |
+
+Numbers and arrows in the app tab work only after **Remote mode in app**.
+
+---
+
+## Install into your app
+
+### 1. Local tarball (not the public registry)
+
+```bash
+cd /path/to/SCAYVO
 npm install
 npm run build
 npm pack
 ```
 
-In a React + Vite app:
-
 ```bash
+cd /path/to/your-app
 npm install -D /path/to/scayvo-0.1.0.tgz
 npx scayvo init
 ```
 
 `init` writes `scayvo.config.ts`, `src/scayvo.dev.ts`, and a sample fixture **only if they do not already exist**. It prints the two integration blocks. It does not rewrite unknown bootstrap files, and it does not claim the handshake succeeded.
 
-Add the plugin:
+### 2. Vite plugin
 
 ```ts
 // vite.config.ts
@@ -54,7 +276,9 @@ export default defineConfig({
 });
 ```
 
-Gate startup so production bundles never import the demo session:
+Control endpoints exist only during `vite` **serve**, and only on loopback (`localhost`, `127.0.0.1`, `::1`).
+
+### 3. Gate production
 
 ```ts
 // src/main.ts
@@ -71,7 +295,9 @@ async function main() {
 void main();
 ```
 
-`src/scayvo.dev.ts` must register adapters named in `custom`, wait for SCAYVO (including the MSW worker), then import application code that can fetch.
+### 4. Session file
+
+Register adapters named in `custom`, wait for SCAYVO (including the MSW worker), then import modules that can `fetch`.
 
 ```ts
 import { startScayvo } from 'scayvo/client';
@@ -89,83 +315,151 @@ export async function startDemoDevelopment() {
 }
 ```
 
-Create stores, query clients, and other mutable singletons **inside `mount`** for each generation, or reset them through adapters. Remounting React does not reset module-level caches by itself. Pass `context.signal` into `fetch`.
+Optional: `scayvo/react` → `createReactIntegration(target, render)` uses `flushSync` for the first commit.
 
-Control endpoints exist only during `vite` dev serve, and only when the server is bound to loopback (`localhost`, `127.0.0.1`, `::1`). Binding `0.0.0.0` disables them.
+Create stores, query clients, and other mutable singletons **inside `mount`** (or reset them in adapters). Remounting React does not reset module-level caches. Pass `context.signal` into `fetch`.
 
-## Run the example
+`mount` should resolve after the first usable shell, not after every network request. That is why Slow API can be **Active** while the skeleton is still on screen.
 
-```bash
-npm install
-npm run build
-npm install --prefix examples/demo
-npm run demo -- --host 127.0.0.1 --port 4173
-```
+`dispose()` must abort fetches, timers, and subscriptions, then unmount.
 
-Open:
+Public exports: `scayvo`, `scayvo/vite`, `scayvo/client`, `scayvo/react`.
 
-- App: `http://127.0.0.1:4173/`
-- Director: `http://127.0.0.1:4173/__scayvo/`
-
-Halo Supply is a three-route storefront (dashboard, checkout, account). Six scenes are driven by `fetch` to `/api/*`, not by reading a scene id to pick hardcoded markup.
-
-| Key | Scene | What you should see |
-| --- | --- | --- |
-| 1 | Empty dashboard | Zero orders, $0.00 |
-| 2 | Growing business | 3 orders, $977.00 from the fixture |
-| 3 | Slow API | Skeleton for ~4s, then the same 3 orders |
-| 4 | Server error | Dashboard error from HTTP 500 |
-| 5 | Payment declined | Checkout. Pay, then a declined toast |
-| 6 | Premium account | Plan `premium` |
-
-Replay (Space) on payment-failed clears the form and toast, then Pay fails again. Reset restores managed keys and the original route, then mounts without SCAYVO mocks.
+---
 
 ## CLI
 
+Binary: `scayvo` → `dist/cli/index.js`. Run from the **app** directory (where `scayvo.config.ts` lives). `run` / `reset` need Vite already up so `.scayvo/runtime.json` exists.
+
 ```bash
-npx scayvo init
-npx scayvo dev
-npx scayvo list
-npx scayvo run payment-failed
+npx scayvo init                 # scaffold config + session file if missing
+npx scayvo validate             # schema, overlap, fixtures, symlink escape
+npx scayvo list                 # scenes in order (no server required)
+npx scayvo dev                  # Vite serve on 127.0.0.1 + print Director URL
+npx scayvo run payment-failed   # waits for SCENE_APPLIED
 npx scayvo reset
-npx scayvo validate
 ```
 
-`run` talks to an already running dev server and exits only after the app acknowledgment. It does not start a backend or open a browser.
+Halo Supply, from a second terminal while the demo is running:
 
-Exit codes: `0` ok, `1` exec, `2` invalid config, `3` no connection/client, `4` busy/timeout.
+```bash
+cd examples/demo
+npx scayvo list
+npx scayvo run busy
+npx scayvo run payment-failed
+npx scayvo reset
+```
 
-## Director keys
+`run` talks to an already running dev server via the runtime file. It does not take `--base-url`. It does not start a backend or open a browser. Exit only after the app acknowledgment.
 
-| Key | Action |
+| Code | Meaning |
 | --- | --- |
-| 1–9 | Scene by `order` |
-| ← → | Previous / next, no wrap |
-| Space | Replay current scene |
-| R | Reset |
-| D | Film mode in Director |
-| / | Focus scene search in Director |
-| Escape | Exit film in Director; turn off Remote mode in the app |
+| `0` | ok |
+| `1` | exec |
+| `2` | invalid config |
+| `3` | no connection / client |
+| `4` | busy / timeout |
 
-Shortcuts ignore typing, IME, modifiers, and key repeat. Numbers and arrows in the **app** tab work only after Remote mode is enabled.
+---
 
-These are page-level listeners, not OS-global hotkeys.
+## How a scene applies
+
+Scenes resolve as **baseline + defaults + scene**. They never inherit leftover previous-scene state.
+
+Apply **re-prepares even the current scene**. Replay is explicit and does the same. No full page reload.
+
+`payment-failed` means the **next** Pay request fails. The declined toast must not appear until submit. v0.1 does not click the DOM for you.
+
+Config is trusted local TypeScript loaded by Node. Scene ids are lowercase kebab-case. `order` lists every scene once. `initialScene` must be in that list. Fixtures are relative to the config, verified as JSON, then inlined. Absolute paths and symlink escapes outside the project root fail before any mutation.
+
+Editing `scayvo.config.ts` while a session is live shows **Configuration changed**. Reset and reload. Config HMR is deferred.
+
+---
 
 ## Network and storage
 
-- Path matchers are literal (`/api/orders`). Extra query keys are allowed; declared keys use equality. Ambiguous overlaps fail `validate`.
-- `network.scope` uses path boundaries: `/api/` does not match `/apiary`. Out-of-scope requests (assets, Vite HMR) pass through.
-- In-scope requests without a matcher are blocked and listed in Director. HTTP errors from mocks are scene data, not engine failure.
-- `delayMs` is 0–30000. It is not an application timeout.
-- Storage patches apply only to `managedStorage` keys. `null` deletes a key for the scene. SCAYVO never calls `localStorage.clear()`.
+- Path matchers are literal (`/api/orders`). Extra query keys are allowed; declared keys use equality. Overlaps fail `validate`.
+- `network.scope` uses path boundaries: `/api/` does not match `/apiary`. Assets and Vite HMR pass through.
+- In-scope requests without a matcher are **blocked** and listed in Director.
+- HTTP errors from mocks are scene data, not engine failure.
+- `delayMs` is 0–30000. It is not an application timeout. To demo an app timeout, abort sooner than the mock delay.
+- Storage patches apply only to `managedStorage` keys. `null` deletes a key. SCAYVO never calls `localStorage.clear()`.
 - One app client per session. A second app tab is refused.
+- MSW is the interceptor. No hand-rolled `fetch` patch. No GraphQL / WebSocket mocking in v0.1.
 
-## Tests
+---
+
+## Tests (A→Z)
+
+Recorded against this repository. Not placeholders.
 
 ```bash
-npm run test          # unit + integration (vitest)
+npm run test          # Vitest unit + integration
 npx playwright install chromium
-npm run test:e2e      # Playwright against examples/demo
+npm run test:e2e      # Playwright Chromium vs examples/demo on :4173
+npm run test:all
 ```
 
-See [docs/getting-started.md](docs/getting-started.md), [docs/limits.md](docs/limits.md), and [docs/integrations.md](docs/integrations.md).
+Playwright starts its own server on **4173**. Stop anything else on that port first.
+
+| Suite | Last run | Result |
+| --- | --- | --- |
+| Vitest | 15 Sep 2026 | **25 passed** |
+| Playwright Chromium | 15 Sep 2026 | **14 passed** |
+
+**Vitest** — schema/overlap/unmanaged keys/fixtures, baseline merge, matchers (`/api/` vs `/apiary`), storage allowlist, keyboard ignore rules, loopback security, `ADAPTER_MISSING` copy, production bundle isolation (no `/__scayvo`, worker, fixtures, scene titles), clean tarball `init` / `validate` / `list`.
+
+**Playwright** — cold boot before `/api` hits Vite, A→B→A no leak, slow→busy isolation, replay of payment-failed, reset of managed keys, refresh keeps original baseline, unhandled in-scope block, command burst / BUSY, focus + remote, second app tab refused, unauthorized HTTP, Director disconnect keeps mocks, assets outside `/api/`, p95 apply-to-shell &lt; 1s over 30 switches.
+
+**Not automated:** adapter throw mid-apply; `WORKER_CONFLICT` against a foreign PWA worker; visual pixel snapshots (intentional).
+
+Details: [tests/RESULTS.md](tests/RESULTS.md).
+
+---
+
+## Repository map
+
+```text
+src/core/        types, defineScayvo, validate, resolve, fixtures
+src/vite/        plugin, loopback HTTP/WS, MSW worker, Director static
+src/client/      engine, storage, journal, keyboard, overlay, MSW runtime
+src/react/       createReactIntegration (flushSync)
+src/cli/         init, dev, list, run, reset, validate
+src/director/    Director UI (built to dist/director)
+examples/demo/   Halo Supply
+docs/            getting started, limits, integrations, assets
+tests/           unit, integration, Playwright
+```
+
+---
+
+## Docs
+
+| Doc | Topic |
+| --- | --- |
+| [docs/getting-started.md](docs/getting-started.md) · [NL](docs/getting-started.nl.md) · [AR](docs/getting-started.ar.md) | Package, config, three app changes, mount, handshake |
+| [docs/limits.md](docs/limits.md) · [NL](docs/limits.nl.md) · [AR](docs/limits.ar.md) | State, network, workers, control plane, recovery, honesty |
+| [docs/integrations.md](docs/integrations.md) · [NL](docs/integrations.nl.md) · [AR](docs/integrations.ar.md) | React integration, adapters, MSW, config hash |
+| [docs/README.md](docs/README.md) | Hub + screenshot index |
+| [examples/demo/README.md](examples/demo/README.md) | Halo Supply |
+| [LICENSE](LICENSE) | MIT |
+
+---
+
+## Troubleshooting
+
+| Symptom | Likely cause |
+| --- | --- |
+| Director stays on Waiting | App tab not on the same origin, or production branch of `main` ran |
+| `/__scayvo/` 404 | Server not in `vite` serve, or host is not loopback |
+| Toast already visible on payment-failed | Scene means the **next** Pay fails; click Pay |
+| After Reset, JSON parse of `<!DOCTYPE` | No real `/api` backend — expected |
+| `WORKER_CONFLICT` | Another Service Worker on the same scope; SCAYVO will not unregister it |
+| `npm install scayvo` from npm | Wrong package — pack this repo instead |
+| Playwright `4173 is already used` | Stop the demo, then `npx playwright test` |
+
+---
+
+## License
+
+MIT. Local development tool. Do not expose `/__scayvo/` on a shared network.
