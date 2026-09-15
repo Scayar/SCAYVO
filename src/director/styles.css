@@ -1,0 +1,218 @@
+:root {
+  color-scheme: dark;
+  --bg: #101318;
+  --panel: #171c24;
+  --line: #2a3344;
+  --text: #eef2f7;
+  --muted: #8b97ab;
+  --blue: #6ea8ff;
+  --orange: #f0a35b;
+  --live: #3b82f6;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+body {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.shell {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 22px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brand {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.top h1, .film-title {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.top, .film-top, .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.pill.active { color: var(--blue); border-color: var(--live); }
+.pill.applying { color: var(--orange); border-color: var(--orange); }
+.pill.failed, .pill.recovery-failed { color: var(--orange); border-color: var(--orange); }
+
+.route {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.scenes {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.scene {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: inherit;
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.scene.active {
+  border-color: var(--live);
+  box-shadow: inset 3px 0 0 var(--live);
+}
+
+.num {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.scene-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scene-body strong { font-size: 14px; }
+.scene-body em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.live {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+}
+
+.actions, .film-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.film-actions { grid-template-columns: 1fr 1fr 1fr; }
+
+button {
+  background: #202735;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+button.accent { border-color: var(--orange); color: var(--orange); }
+.text-btn {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  padding: 0;
+}
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--orange);
+  font-size: 12px;
+}
+
+.progress span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 1s infinite;
+}
+
+.diag-panel {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.fix, .muted { display: block; margin-top: 6px; color: var(--muted); }
+
+.tagline {
+  margin: auto 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.film {
+  min-height: 100vh;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+.film-kicker {
+  margin: 0;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.film-title { font-size: 48px; line-height: 1.05; }
+
+@keyframes pulse {
+  50% { opacity: 0.35; }
+}
