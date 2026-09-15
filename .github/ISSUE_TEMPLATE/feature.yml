@@ -1,0 +1,35 @@
+name: Feature request
+description: A change that stays inside v0.1 limits
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read [docs/limits.md](https://github.com/Scayar/SCAYVO/blob/cursor/director-visual-identity-9a6f/docs/limits.md) first.
+        Out of v0.1: global fake clock, Next.js/SSR, GraphQL, WebSocket mocks, cloud, OS-global hotkeys, PWA worker coexistence.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      placeholder: What is painful in a live demo today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      placeholder: Which declared source or registered adapter should change?
+    validations:
+      required: true
+  - type: checkboxes
+    id: limits
+    attributes:
+      label: Still true
+      options:
+        - label: Loopback only; production must not ship /__scayvo/, the worker, or fixtures
+          required: true
+        - label: No localStorage.clear(); no full page reload; apply re-prepares even the current scene
+          required: true
+        - label: This is not a request to publish to the public npm registry
+          required: true

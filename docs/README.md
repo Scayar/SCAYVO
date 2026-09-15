@@ -1,6 +1,6 @@
 # SCAYVO documentation
 
-Private local scene controller for a running Vite + React SPA.
+Open-source local scene controller for a running Vite + React SPA. MIT.
 
 **Read this in:** [English](../README.md) · [Nederlands](../README.nl.md) · [العربية](../README.ar.md)
 
@@ -9,9 +9,12 @@ Private local scene controller for a running Vite + React SPA.
 | Getting started | [getting-started.md](getting-started.md) | [getting-started.nl.md](getting-started.nl.md) | [getting-started.ar.md](getting-started.ar.md) |
 | Limits | [limits.md](limits.md) | [limits.nl.md](limits.nl.md) | [limits.ar.md](limits.ar.md) |
 | Integrations | [integrations.md](integrations.md) | [integrations.nl.md](integrations.nl.md) | [integrations.ar.md](integrations.ar.md) |
+| GitHub About / topics | [github-presence.md](github-presence.md) | — | — |
 | Tests | [../tests/RESULTS.md](../tests/RESULTS.md) | — | — |
 | Halo Supply | [../examples/demo/README.md](../examples/demo/README.md) | — | — |
 | License | [../LICENSE](../LICENSE) | MIT | MIT |
+| Contributing | [../CONTRIBUTING.md](../CONTRIBUTING.md) | — | — |
+| Security | [../SECURITY.md](../SECURITY.md) | — | — |
 
 ## Watch
 
@@ -21,6 +24,8 @@ Private local scene controller for a running Vite + React SPA.
 | [walkthrough.mp4](assets/walkthrough.mp4) | Trimmed capture of Director + Halo Supply (~90s, light dashboard) |
 | [banner.svg](assets/banner.svg) | README hero |
 | [mark.svg](assets/mark.svg) | Square mark |
+| [social-preview.svg](assets/social-preview.svg) | GitHub social card (export PNG 1280×640) |
+| [social-preview.png](assets/social-preview.png) | Upload in Settings → General → Social preview |
 
 ## Screenshots
 

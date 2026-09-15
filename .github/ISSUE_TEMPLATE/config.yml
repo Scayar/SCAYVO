@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/Scayar/SCAYVO/blob/cursor/director-visual-identity-9a6f/docs/README.md
+    about: Getting started, limits, and integrations (EN / NL / AR)
+  - name: Halo Supply demo
+    url: https://github.com/Scayar/SCAYVO/blob/cursor/director-visual-identity-9a6f/examples/demo/README.md
+    about: How to run the example storefront on loopback
+  - name: Security advisory
+    url: https://github.com/Scayar/SCAYVO/security/advisories/new
+    about: Report a vulnerability privately — do not use public issues

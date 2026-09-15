@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="SCAYVO - Your next demo. One key away.">
+  <rect width="1280" height="640" fill="#153a75"/>
+  <circle cx="1100" cy="-40" r="280" fill="#2b63e3" opacity="0.35"/>
+  <circle cx="1220" cy="560" r="200" fill="#73b3ff" opacity="0.28"/>
+  <circle cx="80" cy="580" r="160" fill="#2b63e3" opacity="0.18"/>
+  <rect x="80" y="200" width="120" height="120" rx="32" fill="#ffffff"/>
+  <text x="140" y="284" text-anchor="middle" fill="#153a75" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="700">S</text>
+  <text x="232" y="248" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">SCAYVO</text>
+  <text x="232" y="308" fill="#c9ddff" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="500">Your next demo. One key away.</text>
+  <text x="80" y="400" fill="#eaf2ff" font-family="Arial, Helvetica, sans-serif" font-size="24">Local scene controller for React + Vite  |  loopback only  |  MIT</text>
+  <rect x="80" y="448" width="14" height="14" rx="3" fill="#73b3ff"/>
+  <text x="106" y="461" fill="#eaf2ff" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="18">v0.1.0  /__scayvo/  keys 1-9  Space replay</text>
+</svg>

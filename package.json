@@ -1,9 +1,33 @@
 {
   "name": "scayvo",
   "version": "0.1.0",
-  "description": "Local scene controller for React + Vite demos. Switch routes, mock APIs, and restore demo state without rebuilding the setup between takes.",
+  "description": "Your next demo. One key away. Local scene controller for a running React + Vite SPA. Loopback-only Director on the same Vite server. Pack a local tarball — not on public npm.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Scayar/SCAYVO.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Scayar/SCAYVO/issues"
+  },
+  "homepage": "https://github.com/Scayar/SCAYVO#readme",
+  "keywords": [
+    "vite",
+    "react",
+    "typescript",
+    "spa",
+    "demo",
+    "msw",
+    "mock-service-worker",
+    "vite-plugin",
+    "developer-experience",
+    "scene-controller",
+    "cli",
+    "local-first",
+    "loopback",
+    "hotkeys"
+  ],
   "bin": {
     "scayvo": "./dist/cli/index.js"
   },
@@ -31,6 +55,9 @@
     "README.nl.md",
     "README.ar.md",
     "LICENSE",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
     "docs"
   ],
   "scripts": {

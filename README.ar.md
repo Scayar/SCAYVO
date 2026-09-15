@@ -16,9 +16,10 @@
 </p>
 
 <p align="center">
-  <img alt="v0.1" src="https://img.shields.io/badge/v0.1-local%20only-153a75?style=flat-square" />
+  <img alt="v0.1.0" src="https://img.shields.io/badge/v0.1.0-local%20only-153a75?style=flat-square" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D20.11-2b63e3?style=flat-square" />
   <img alt="React + Vite" src="https://img.shields.io/badge/React%20%2B%20Vite-SPA-73b3ff?style=flat-square" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-2b63e3?style=flat-square" />
   <img alt="License" src="https://img.shields.io/badge/license-MIT-eaf2ff?style=flat-square&labelColor=153a75" />
   <img alt="npm" src="https://img.shields.io/badge/npm-do%20not%20install%20public%20scayvo-e05645?style=flat-square" />
 </p>
@@ -503,6 +504,9 @@ tests/           وحدة، تكامل، Playwright
 | [docs/limits.md](docs/limits.md) · [NL](docs/limits.nl.md) · [AR](docs/limits.ar.md) | الحالة، الشبكة، العمال، مستوى التحكم، الاستعادة، الصدق |
 | [docs/integrations.md](docs/integrations.md) · [NL](docs/integrations.nl.md) · [AR](docs/integrations.ar.md) | React، المحولات، MSW، هاش الإعداد |
 | [docs/README.md](docs/README.md) | الفهرس + فهرس الصور |
+| [docs/github-presence.md](docs/github-presence.md) | وصف GitHub، التوبيكس، منشور الإطلاق |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | كيف تساهم |
+| [SECURITY.md](SECURITY.md) | الثغرات |
 | [examples/demo/README.md](examples/demo/README.md) | Halo Supply |
 | [LICENSE](LICENSE) | MIT |
 

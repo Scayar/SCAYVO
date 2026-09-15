@@ -1,0 +1,59 @@
+name: Bug report
+description: Something does not work as documented
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing this. SCAYVO is loopback-only. Do not paste tokens from `.scayvo/runtime.json`.
+        Security issues → [private advisory](https://github.com/Scayar/SCAYVO/security/advisories/new).
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      placeholder: Director stayed on Waiting, payment toast appeared before Pay, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. npm run start --prefix examples/demo -- --host 127.0.0.1 --port 4173 --strictPort
+        2. Open http://127.0.0.1:4173/dashboard and /__scayvo/
+        3. Apply scene …
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - Director
+        - Halo Supply demo
+        - CLI
+        - Vite plugin
+        - Client / overlay
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: scene
+    attributes:
+      label: Scene id (if any)
+      placeholder: empty, busy, slow, api-error, payment-failed, premium
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: Node 20.x, Vite 7.x, Chromium, OS
+    validations:
+      required: true
