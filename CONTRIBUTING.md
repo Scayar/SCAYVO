@@ -34,6 +34,13 @@ npx playwright test
 
 Playwright starts its own server on **4173**. Stop anything else on that port first. Nested `npm run demo -- --host` does not forward flags to Vite.
 
+## Support
+
+- Website: [Scayar.com](https://Scayar.com)
+- Email: [Scayar.exe@gmail.com](mailto:Scayar.exe@gmail.com)
+- Telegram: [@im_scayar](https://t.me/im_scayar)
+- Coffee: [buymeacoffee.com/scayar](https://buymeacoffee.com/scayar)
+
 ## How to send a change
 
 1. Open an issue first if the change is large (new scene kinds, network surface, or security).

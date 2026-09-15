@@ -29,6 +29,8 @@ Use GitHub private vulnerability reporting:
 
 **https://github.com/Scayar/SCAYVO/security/advisories/new**
 
+You can also email **[Scayar.exe@gmail.com](mailto:Scayar.exe@gmail.com)** with the same details. Do not CC public lists.
+
 Please include:
 
 - SCAYVO version / commit

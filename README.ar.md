@@ -82,6 +82,7 @@
 ## المحتويات
 
 - [ما هو](#ما-هو)
+- [كيف يتراكب](#كيف-يتراكب)
 - [لوحة الألوان](#لوحة-الألوان)
 - [وش ما يسويه v0.1](#وش-ما-يسويه-v01)
 - [تشغيل عرض Halo Supply](#تشغيل-عرض-halo-supply)
@@ -95,6 +96,7 @@
 - [خريطة المستودع](#خريطة-المستودع)
 - [التوثيق](#التوثيق)
 - [استكشاف الأخطاء](#استكشاف-الأخطاء)
+- [الكاتب والدعم](#الكاتب-والدعم)
 - [الترخيص](#الترخيص)
 
 ---
@@ -116,18 +118,70 @@ v0.1 يتحكم في **مصادر مصرّح فيها ومحولات مسجّل�
 
 اسم npm العام `scayvo` عنوان عمل. **هذا المستودع ما ينشر على npm.** لا تسوي `npm install scayvo` من السجل. ابنِ tarball محلي.
 
+---
+
+## كيف يتراكب
+
+عملية Vite واحدة. التطبيق والمخرج والـ WebSocket وعامل MSW ما يطلعون من loopback.
+
 ```mermaid
-flowchart LR
-  subgraph vite ["نفس عملية Vite على 127.0.0.1"]
-    App["Halo Supply SPA"]
-    Dir["المخرج /__scayvo/"]
-    WS["WebSocket /__scayvo/control"]
-    Worker["عامل MSW"]
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#eaf2ff","primaryTextColor":"#122033","primaryBorderColor":"#153a75","lineColor":"#2b63e3","secondaryColor":"#73b3ff","tertiaryColor":"#f3f6fb","clusterBkg":"#f3f6fb","clusterBorder":"#153a75","edgeLabelBackground":"#ffffff"}}}%%
+flowchart TB
+  subgraph host["127.0.0.1 — سيرفر Vite واحد"]
+    direction TB
+    subgraph ui["انت"]
+      D["المخرج<br/>/__scayvo/"]
+      H["Halo Supply SPA<br/>/dashboard /checkout /account"]
+      C["CLI<br/>npx scayvo run busy"]
+    end
+    subgraph plane["مستوى التحكم — ما ينشحن للإنتاج"]
+      WS["WebSocket<br/>/__scayvo/control"]
+      E["المحرك<br/>resolve · storage · adapters"]
+      M["عامل MSW<br/>JSON · delay · أخطاء HTTP"]
+    end
   end
-  Dir --> WS
-  App --> WS
-  App --> Worker
-  CLI["npx scayvo run scene-id"] --> WS
+
+  D -->|"cue / Replay / Reset"| WS
+  C -->|"SCENE_APPLY"| WS
+  WS --> E
+  E -->|"handlers + route + remount"| H
+  H -->|"fetch /api/*"| M
+  H -->|"SCENE_APPLIED"| WS
+  WS -->|"Active · LIVE"| D
+
+  style D fill:#153a75,stroke:#153a75,color:#ffffff
+  style H fill:#122033,stroke:#73b3ff,color:#eaf2ff
+  style C fill:#2b63e3,stroke:#2b63e3,color:#ffffff
+  style WS fill:#eaf2ff,stroke:#2b63e3,color:#122033
+  style E fill:#eaf2ff,stroke:#153a75,color:#122033
+  style M fill:#73b3ff,stroke:#153a75,color:#122033
+```
+
+Apply = **خط أساس + افتراضيات + مشهد**. يعيد التحضير حتى للمشهد الحالي.
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor You
+  participant Director
+  participant Control as Control WS
+  participant Engine
+  participant App as Halo Supply
+  participant MSW
+
+  You->>App: open 127.0.0.1:4173/dashboard
+  You->>Director: open /__scayvo/
+  App->>Control: AUTH app
+  Director->>Control: AUTH director
+  You->>Director: مفتاح 2 / Growing business
+  Director->>Control: SCENE_APPLY busy
+  Control->>Engine: resolve busy
+  Engine->>MSW: handlers
+  Engine->>App: storage + route + remount
+  App->>MSW: GET /api/orders
+  MSW-->>App: 3 صفوف · $977.00
+  App-->>Control: SCENE_APPLIED
+  Control-->>Director: Active · LIVE
 ```
 
 ---
@@ -531,7 +585,20 @@ tests/           وحدة، تكامل، Playwright
 
 MIT. أداة تطوير محلية. لا تعرض `/__scayvo/` على شبكة مشتركة.
 
+---
+
+## الكاتب والدعم
+
+**[Scayar](https://github.com/Scayar)** — هولندا. [Scayar.com](https://Scayar.com) · [MezaOS](https://MezaOS.com)
+
+<p align="center">
+  <a href="https://Scayar.com"><img alt="Website" src="https://img.shields.io/badge/Website-Scayar.com-153a75?style=for-the-badge" /></a>
+  <a href="mailto:Scayar.exe@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-Scayar.exe@gmail.com-2b63e3?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+  <a href="https://t.me/im_scayar"><img alt="Telegram" src="https://img.shields.io/badge/Telegram-@im__scayar-73b3ff?style=for-the-badge&logo=telegram&logoColor=white&labelColor=153a75" /></a>
+  <a href="https://buymeacoffee.com/scayar"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/Buy_Me_A_Coffee-scayar-e05645?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white" /></a>
+</p>
+
 <p align="center">
   <img src="docs/assets/mark.svg" width="48" alt="SCAYVO" /><br />
-  <sub>SCAYVO v0.1 · عرضك الجاي. بمفتاح واحد.</sub>
+  <sub>من <a href="https://scayar.com">Scayar</a> · عرضك الجاي. بمفتاح واحد.</sub>
 </p>

@@ -5,7 +5,7 @@ GitHub’s **About** box, **topics**, **website**, and **social preview** live i
 pastes them. This page is the copy-paste source.
 
 Repo: https://github.com/Scayar/SCAYVO  
-README preview (this branch): https://github.com/Scayar/SCAYVO/tree/cursor/director-visual-identity-9a6f
+Author: [Scayar](https://github.com/Scayar) · [Scayar.com](https://Scayar.com) · [Telegram](https://t.me/im_scayar) · [Coffee](https://buymeacoffee.com/scayar)
 
 ## Description (About)
 
@@ -31,11 +31,11 @@ Je volgende demo. Eén toets verwijderd. Lokale scene-controller voor een draaie
 
 ## Website
 
-```
-https://github.com/Scayar/SCAYVO
-```
+Same as the rest of the Scayar org:
 
-After this branch is the default `main` README, GitHub will render it on that URL.
+```
+https://Scayar.com
+```
 
 ## Topics (GitHub hashtags)
 

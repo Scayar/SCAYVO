@@ -47,10 +47,13 @@ an individual is officially representing the community in public spaces.
 
 ## Enforcement
 
-Report incidents by opening a **private** GitHub security advisory on
-[Scayar/SCAYVO](https://github.com/Scayar/SCAYVO/security/advisories/new)
-(for security-sensitive reports) or by contacting the maintainers through a
-maintainer-only channel. Do not post CoC reports as public issues.
+Report incidents privately:
+
+- GitHub advisory: [Scayar/SCAYVO security advisories](https://github.com/Scayar/SCAYVO/security/advisories/new)
+- Email: [Scayar.exe@gmail.com](mailto:Scayar.exe@gmail.com)
+- Telegram: [@im_scayar](https://t.me/im_scayar)
+
+Do not post Code of Conduct reports as public issues.
 
 ## Enforcement Guidelines
 

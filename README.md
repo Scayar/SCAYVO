@@ -71,6 +71,7 @@ Director lives on the **same Vite server** at `/__scayvo/`. Production builds do
 ## Contents
 
 - [What it is](#what-it-is)
+- [How it fits together](#how-it-fits-together)
 - [Palette](#palette)
 - [What v0.1 does not do](#what-v01-does-not-do)
 - [Run the Halo Supply demo](#run-the-halo-supply-demo)
@@ -84,6 +85,7 @@ Director lives on the **same Vite server** at `/__scayvo/`. Production builds do
 - [Repository map](#repository-map)
 - [Docs](#docs)
 - [Troubleshooting](#troubleshooting)
+- [Author and support](#author-and-support)
 - [License](#license)
 
 ---
@@ -105,18 +107,74 @@ v0.1 controls **declared sources and registered adapters only**. It does not cla
 
 The public npm name `scayvo` is a working title. **This repository does not publish to npm.** Do not `npm install scayvo` from the registry. Pack a local tarball.
 
+---
+
+## How it fits together
+
+One Vite process. The app, Director, WebSocket, and MSW worker never leave loopback.
+
 ```mermaid
-flowchart LR
-  subgraph vite ["Same Vite process on 127.0.0.1"]
-    App["Halo Supply SPA"]
-    Dir["Director /__scayvo/"]
-    WS["WebSocket /__scayvo/control"]
-    Worker["MSW worker"]
+%%{init: {"theme":"base","themeVariables":{"primaryColor":"#eaf2ff","primaryTextColor":"#122033","primaryBorderColor":"#153a75","lineColor":"#2b63e3","secondaryColor":"#73b3ff","tertiaryColor":"#f3f6fb","clusterBkg":"#f3f6fb","clusterBorder":"#153a75","edgeLabelBackground":"#ffffff"}}}%%
+flowchart TB
+  subgraph host["127.0.0.1 — one Vite server"]
+    direction TB
+    subgraph ui["You"]
+      D["Director<br/>/__scayvo/"]
+      H["Halo Supply SPA<br/>/dashboard /checkout /account"]
+      C["CLI<br/>npx scayvo run busy"]
+    end
+    subgraph plane["Control plane — not shipped to production"]
+      WS["WebSocket<br/>/__scayvo/control"]
+      E["Engine<br/>resolve · storage · adapters"]
+      M["MSW worker<br/>JSON · delay · HTTP errors"]
+    end
   end
-  Dir --> WS
-  App --> WS
-  App --> Worker
-  CLI["npx scayvo run scene-id"] --> WS
+
+  D -->|"cue / Replay / Reset"| WS
+  C -->|"SCENE_APPLY"| WS
+  WS --> E
+  E -->|"handlers + route + remount"| H
+  H -->|"fetch /api/*"| M
+  H -->|"SCENE_APPLIED"| WS
+  WS -->|"Active · LIVE"| D
+
+  style D fill:#153a75,stroke:#153a75,color:#ffffff
+  style H fill:#122033,stroke:#73b3ff,color:#eaf2ff
+  style C fill:#2b63e3,stroke:#2b63e3,color:#ffffff
+  style WS fill:#eaf2ff,stroke:#2b63e3,color:#122033
+  style E fill:#eaf2ff,stroke:#153a75,color:#122033
+  style M fill:#73b3ff,stroke:#153a75,color:#122033
+```
+
+Apply is **baseline + defaults + scene**. It re-prepares even the current scene. No full reload. No `localStorage.clear()`.
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"actorBkg":"#eaf2ff","actorBorder":"#153a75","actorTextColor":"#122033","signalColor":"#2b63e3","signalTextColor":"#122033","noteBkgColor":"#f3f6fb","noteBorderColor":"#73b3ff"}}}%%
+sequenceDiagram
+  autonumber
+  actor You
+  participant Director
+  participant Control as Control WS
+  participant Engine
+  participant App as Halo Supply
+  participant MSW
+
+  You->>App: open 127.0.0.1:4173/dashboard
+  You->>Director: open /__scayvo/
+  App->>Control: AUTH (app)
+  Director->>Control: AUTH (director)
+  Note over Director: Connected — not Active yet
+
+  You->>Director: key 2 / Growing business
+  Director->>Control: SCENE_APPLY busy
+  Control->>Engine: resolve busy
+  Engine->>Engine: baseline + defaults + scene
+  Engine->>MSW: rest handlers + delayMs
+  Engine->>App: storage patch + route + remount
+  App->>MSW: GET /api/orders
+  MSW-->>App: 3 rows · $977.00
+  App-->>Control: SCENE_APPLIED
+  Control-->>Director: Active · LIVE
 ```
 
 ---
@@ -468,3 +526,25 @@ tests/           unit, integration, Playwright
 ## License
 
 MIT. Local development tool. Do not expose `/__scayvo/` on a shared network.
+
+---
+
+## Author and support
+
+**[Scayar](https://github.com/Scayar)** — Netherlands. [Scayar.com](https://Scayar.com) · [MezaOS](https://MezaOS.com)
+
+<p align="center">
+  <a href="https://Scayar.com"><img alt="Website" src="https://img.shields.io/badge/Website-Scayar.com-153a75?style=for-the-badge" /></a>
+  <a href="mailto:Scayar.exe@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-Scayar.exe@gmail.com-2b63e3?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+  <a href="https://t.me/im_scayar"><img alt="Telegram" src="https://img.shields.io/badge/Telegram-@im__scayar-73b3ff?style=for-the-badge&logo=telegram&logoColor=white&labelColor=153a75" /></a>
+  <a href="https://buymeacoffee.com/scayar"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/Buy_Me_A_Coffee-scayar-e05645?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white" /></a>
+</p>
+
+Issues: [github.com/Scayar/SCAYVO/issues](https://github.com/Scayar/SCAYVO/issues)  
+Security: [SECURITY.md](SECURITY.md) or email the address above.  
+If SCAYVO saves you a demo, a star or a coffee helps the next one ship.
+
+<p align="center">
+  <img src="docs/assets/mark.svg" width="48" alt="SCAYVO" /><br />
+  <sub>Made by <a href="https://scayar.com">Scayar</a> · Your next demo. One key away.</sub>
+</p>

@@ -2,6 +2,8 @@
 
 Open-source local scene controller for a running Vite + React SPA. MIT.
 
+**Author:** [Scayar](https://github.com/Scayar) · [Scayar.com](https://Scayar.com) · [Telegram](https://t.me/im_scayar) · [Coffee](https://buymeacoffee.com/scayar)
+
 **Read this in:** [English](../README.md) · [Nederlands](../README.nl.md) · [العربية](../README.ar.md)
 
 | Guide | EN | NL | AR |
