@@ -1,0 +1,5 @@
+[
+  { "id": "demo-1001", "customer": "Demo Studio", "totalCents": 59900 },
+  { "id": "demo-1002", "customer": "Sample Works", "totalCents": 12900 },
+  { "id": "demo-1003", "customer": "Example Lab", "totalCents": 24900 }
+]
