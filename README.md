@@ -394,6 +394,7 @@ Editing `scayvo.config.ts` while a session is live shows **Configuration changed
 Recorded against this repository. Not placeholders.
 
 ```bash
+npm run typecheck     # tsc --noEmit (package, Director, Halo Supply src)
 npm run test          # Vitest unit + integration
 npx playwright install chromium
 npm run test:e2e      # Playwright Chromium vs examples/demo on :4173

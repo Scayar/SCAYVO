@@ -356,6 +356,7 @@ Config is lokale TypeScript in Node. Scene-ids: lowercase kebab-case. `order` no
 ## Tests (A→Z)
 
 ```bash
+npm run typecheck
 npm run test
 npx playwright install chromium
 npm run test:e2e

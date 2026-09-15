@@ -10,5 +10,5 @@
     "noEmit": true,
     "types": ["vite/client"]
   },
-  "include": ["src", "scayvo.config.ts", "vite.config.ts"]
+  "include": ["src", "scayvo.config.ts"]
 }

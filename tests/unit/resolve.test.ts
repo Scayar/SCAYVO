@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { mergeMocks, resolveScene } from '../../src/core/resolve.js';
+import type { Json, ResolvedMock } from '../../src/core/types.js';
 import { sampleConfig } from './sample-config.js';
+
+function jsonReply(mock: ResolvedMock | undefined): { status: number; json: Json } {
+  if (!mock || !('response' in mock) || !mock.response || !('json' in mock.response)) {
+    throw new Error('expected JSON mock reply');
+  }
+  return mock.response;
+}
 
 describe('scene resolution', () => {
   it('never inherits leftover mocks from a previous scene', () => {
@@ -9,11 +17,8 @@ describe('scene resolution', () => {
     const empty = resolveScene(config, 'empty', {});
     const busyOrders = busy.mocks.find((mock) => mock.path === '/api/orders');
     const emptyOrders = empty.mocks.find((mock) => mock.path === '/api/orders');
-    expect(busyOrders && 'response' in busyOrders && 'json' in busyOrders.response && Array.isArray(busyOrders.response.json)).toBe(true);
-    expect(emptyOrders && 'response' in emptyOrders && 'json' in emptyOrders.response).toBe(true);
-    if (emptyOrders && 'response' in emptyOrders && 'json' in emptyOrders.response) {
-      expect(emptyOrders.response.json).toEqual([]);
-    }
+    expect(Array.isArray(jsonReply(busyOrders).json)).toBe(true);
+    expect(jsonReply(emptyOrders).json).toEqual([]);
   });
 
   it('replaces custom user wholesale instead of deep-merging', () => {
@@ -28,7 +33,9 @@ describe('scene resolution', () => {
       [{ method: 'GET', path: '/api/orders', response: { status: 500, json: { error: 'x' } } }],
     );
     expect(merged).toHaveLength(1);
-    expect(merged[0] && 'response' in merged[0] && merged[0].response.status).toBe(500);
+    const first = merged[0];
+    if (!first || !('response' in first) || !first.response) throw new Error('expected JSON mock');
+    expect(first.response.status).toBe(500);
   });
 
   it('uses scene route, then defaults, then original', () => {

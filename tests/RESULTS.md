@@ -2,6 +2,8 @@
 
 Recorded 15 September 2026 against this repository. These are actual runs, not placeholders.
 
+`npm run typecheck` also passes (package + Director + Halo Supply `src`). Demo `vite.config.ts` is not in the demo tsconfig: root and demo each have their own Vite install, and the plugin types conflict if that file is included.
+
 ## Vitest (`npm test`)
 
 25 passed in ~8s.

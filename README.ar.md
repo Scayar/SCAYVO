@@ -457,7 +457,7 @@ Apply **يعيد التحضير حتى للمشهد الحالي**. Replay صر�
 من الجذر، بعد `npm install` و`npm install --prefix examples/demo`. المنفذ **4173 لازم يكون فاضي** — Playwright يشغّل Vite بنفسه و`reuseExistingServer: false`.
 
 ```bash
-npm run typecheck
+npm run typecheck     # tsc --noEmit (الحزمة، المخرج، مصدر Halo Supply)
 npm run test          # Vitest — وحدة + تكامل
 npx playwright install chromium
 npm run test:e2e      # Playwright Chromium ضد examples/demo على :4173
