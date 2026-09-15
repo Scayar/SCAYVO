@@ -35,7 +35,7 @@ Director draait op **dezelfde Vite-server** op `/__scayvo/`. Productie-builds be
 
 ## Bekijk het
 
-[**▶ Volledige walkthrough (MP4)**](docs/assets/walkthrough.mp4)
+[**▶ Volledige walkthrough (MP4, ~90s)**](docs/assets/walkthrough.mp4)
 
 <p align="center">
   <img src="docs/assets/walkthrough.gif" alt="SCAYVO-walkthrough" width="720" />

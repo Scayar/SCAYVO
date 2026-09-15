@@ -18,7 +18,7 @@ Private local scene controller for a running Vite + React SPA.
 | Asset | What it is |
 | --- | --- |
 | [walkthrough.gif](assets/walkthrough.gif) | Short loop of Director + Halo Supply |
-| [walkthrough.mp4](assets/walkthrough.mp4) | Full ~2 minute capture (current light dashboard) |
+| [walkthrough.mp4](assets/walkthrough.mp4) | Trimmed capture of Director + Halo Supply (~90s, light dashboard) |
 | [banner.svg](assets/banner.svg) | README hero |
 | [mark.svg](assets/mark.svg) | Square mark |
 
