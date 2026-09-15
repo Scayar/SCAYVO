@@ -63,45 +63,37 @@ function ensureStyles(): void {
   style.textContent = `
     #scayvo-overlay {
       position: fixed; inset: 0; z-index: 2147483646;
-      display: grid; place-items: start center; padding-top: 11vh;
+      display: grid; place-items: start center; padding-top: 10vh;
       pointer-events: none;
     }
     #scayvo-overlay[hidden] { display: none; }
     #scayvo-overlay .scayvo-overlay-card {
       pointer-events: auto;
-      min-width: 280px; max-width: 440px;
-      background: #0c0c0a; color: #efe6d0;
-      border: 1px solid #2c2b24; border-left: 3px solid #d6ff32;
-      border-radius: 0; padding: 18px 20px 16px;
-      font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      min-width: min(280px, calc(100vw - 32px)); max-width: 440px;
+      background: #fff; color: #14233f;
+      border-radius: 22px; padding: 18px 20px 16px;
+      font-family: "Plus Jakarta Sans", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      box-shadow: 0 18px 40px rgba(21, 58, 117, .18);
     }
     #scayvo-overlay .scayvo-overlay-kicker {
-      margin: 0;
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-      color: #d6ff32;
+      margin: 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      font-weight: 700; color: #2b63e3;
     }
     #scayvo-overlay .scayvo-overlay-title {
-      margin: 8px 0 0;
-      font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
-      font-size: 22px; font-weight: 400; font-style: italic; letter-spacing: -0.02em;
+      margin: 8px 0 0; font-size: 20px; font-weight: 700; letter-spacing: -0.03em;
     }
     #scayvo-overlay .scayvo-overlay-detail {
-      margin: 8px 0 0;
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-      font-size: 12px; color: #8c8878; line-height: 1.5;
+      margin: 8px 0 0; font-size: 13px; color: #6d7d98; line-height: 1.5;
     }
-    #scayvo-overlay[data-kind="applying"] .scayvo-overlay-kicker { color: #d6ff32; }
     #scayvo-overlay[data-kind="recovery-failed"] .scayvo-overlay-kicker,
-    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-kicker { color: #ff471a; }
-    #scayvo-overlay[data-kind="recovery-failed"] .scayvo-overlay-card,
-    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-card { border-left-color: #ff471a; }
+    #scayvo-overlay[data-kind="config-changed"] .scayvo-overlay-kicker { color: #e05645; }
     #scayvo-demo-badge {
-      position: fixed; top: 10px; right: 10px; z-index: 2147483645;
-      background: #0c0c0a; color: #d6ff32; border: 1px solid #d6ff32; border-radius: 0;
-      padding: 6px 9px 5px;
-      font: 500 10px/1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-      letter-spacing: .16em; text-transform: uppercase;
+      position: fixed; top: 12px; right: 12px; z-index: 2147483645;
+      background: #153a75; color: #fff; border-radius: 999px;
+      padding: 7px 12px 6px;
+      font: 700 11px/1 "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .08em; text-transform: uppercase;
+      box-shadow: 0 8px 18px rgba(21, 58, 117, .28);
     }
   `;
   document.documentElement.appendChild(style);

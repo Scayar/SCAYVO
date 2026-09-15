@@ -144,7 +144,8 @@ Exit codes: `0` ok, `1` exec, `2` invalid config, `3` no connection/client, `4` 
 | Space | Replay current scene |
 | R | Reset |
 | D | Film mode in Director |
-| Escape | Turn off Remote mode in the app |
+| / | Focus scene search in Director |
+| Escape | Exit film in Director; turn off Remote mode in the app |
 
 Shortcuts ignore typing, IME, modifiers, and key repeat. Numbers and arrows in the **app** tab work only after Remote mode is enabled.
 

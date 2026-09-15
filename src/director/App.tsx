@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { deckActionFromKey } from '../client/keyboard';
+import { deckActionFromKey, isEditableTarget } from '../client/keyboard';
 
 type SceneInfo = { id: string; title: string; hotkey: string | null; route?: string };
 
@@ -60,6 +60,7 @@ export function App() {
   const [diagOpen, setDiagOpen] = useState(false);
   const [remoteDraft, setRemoteDraft] = useState(false);
   const [hideBadgeDraft, setHideBadgeDraft] = useState(false);
+  const [query, setQuery] = useState('');
   const [state, setState] = useState<DirectorState>({
     connection: 'waiting',
     sceneId: boot?.scenes?.initialScene ?? null,
@@ -71,11 +72,13 @@ export function App() {
   });
   const [progress, setProgress] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const scenes = boot?.scenes?.scenes ?? [];
   const order = useMemo(() => scenes.map((s) => s.id), [scenes]);
   const currentIndex = state.sceneId ? order.indexOf(state.sceneId) : -1;
   const current = scenes[currentIndex] ?? scenes[0];
+  const needle = query.trim().toLowerCase();
 
   const sendCommand = (type: 'SCENE_APPLY' | 'RESET', sceneId?: string) => {
     const ws = socketRef.current;
@@ -171,9 +174,20 @@ export function App() {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !film) {
+        if (!isEditableTarget(event.target)) {
+          event.preventDefault();
+          searchRef.current?.focus();
+          return;
+        }
+      }
       const action = deckActionFromKey(event, { remoteNumbers: true });
       if (!action) return;
       event.preventDefault();
+      if (action.type === 'escape') {
+        if (film) setFilm(false);
+        return;
+      }
       if (action.type === 'film') {
         setFilm((v) => !v);
         return;
@@ -192,13 +206,15 @@ export function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [state.sceneId, currentIndex, order]);
+  }, [state.sceneId, currentIndex, order, film]);
 
   if (!boot) {
     return (
-      <main className="shell boot-missing">
-        <span className="mark" aria-hidden="true" />
-        <p className="brand">Scayvo</p>
+      <main className="boot-missing">
+        <span className="logo" aria-hidden="true">
+          S
+        </span>
+        <p className="brand">SCAYVO</p>
         <h1>Director</h1>
         <p>Director bootstrap is missing. Restart `scayvo dev` on localhost.</p>
       </main>
@@ -246,73 +262,38 @@ export function App() {
   }
 
   return (
-    <main className="shell">
-      <header className="mast">
-        <div className="mast-brand">
-          <span className="mark" aria-hidden="true" />
+    <div className="app-frame">
+      <aside className="sidebar">
+        <div className="brand-lockup">
+          <span className="logo" aria-hidden="true">
+            S
+          </span>
           <div>
-            <p className="brand">Scayvo</p>
+            <p className="brand">SCAYVO</p>
             <h1>{boot.projectId}</h1>
           </div>
         </div>
-        <div className="meta">
-          {lamp}
-          <span className="route" data-route={state.route}>
-            {state.route || '/'}
-          </span>
-        </div>
-      </header>
 
-      <p className="sheet-kicker">Cue sheet</p>
-      <ol className="scenes">
-        {scenes.map((scene, index) => {
-          const active = scene.id === state.sceneId && state.connection === 'active';
-          return (
-            <li key={scene.id}>
-              <button
-                className={active ? 'scene active' : 'scene'}
-                data-scene-id={scene.id}
-                data-active={active ? 'true' : 'false'}
-                onClick={() => sendCommand('SCENE_APPLY', scene.id)}
-              >
-                <span className="num">{scene.hotkey ?? String(index + 1)}</span>
-                <span className="scene-body">
-                  <strong>{scene.title}</strong>
-                  <em>{scene.id}</em>
-                </span>
-                {active ? <span className="live">LIVE</span> : null}
-              </button>
-            </li>
-          );
-        })}
-      </ol>
+        <button
+          className="cta"
+          disabled={!state.sceneId}
+          onClick={() => state.sceneId && sendCommand('SCENE_APPLY', state.sceneId)}
+        >
+          Replay scene
+          <span aria-hidden="true">+</span>
+        </button>
 
-      {progress ? (
-        <div className="progress" data-progress="true">
-          <span />
-          Applying scene
-        </div>
-      ) : null}
-
-      <footer className="deck">
-        <div className="actions">
-          <button disabled={currentIndex <= 0} data-action="prev" onClick={() => sendCommand('SCENE_APPLY', order[currentIndex - 1])}>
-            Previous
+        <nav className="side-nav" aria-label="Director">
+          <button className="text-btn nav-btn" type="button" onClick={() => setFilm(true)}>
+            Film mode (D)
           </button>
-          <button
-            disabled={currentIndex < 0 || currentIndex >= order.length - 1}
-            data-action="next"
-            onClick={() => sendCommand('SCENE_APPLY', order[currentIndex + 1])}
-          >
-            Next
+          <button className="text-btn nav-btn" type="button" onClick={() => setDiagOpen((v) => !v)}>
+            {diagOpen ? 'Hide diagnostics' : 'Diagnostics'}
           </button>
-          <button className="accent" data-action="replay" disabled={!state.sceneId} onClick={() => state.sceneId && sendCommand('SCENE_APPLY', state.sceneId)}>
-            Replay
-          </button>
-          <button data-action="reset" onClick={() => sendCommand('RESET')}>
+          <button className="text-btn nav-btn" type="button" data-action="reset" onClick={() => sendCommand('RESET')}>
             Reset
           </button>
-        </div>
+        </nav>
 
         <section className="toggles">
           <label>
@@ -337,16 +318,163 @@ export function App() {
             />
             Hide DEMO MODE badge
           </label>
-          <button className="text-btn" onClick={() => setFilm(true)}>
-            Film mode (D)
-          </button>
         </section>
 
-        <section className="diag">
-          <button className="text-btn" onClick={() => setDiagOpen((v) => !v)}>
-            {diagOpen ? 'Hide diagnostics' : 'Diagnostics'}
-          </button>
-          {diagOpen ? (
+        <div className="promo">
+          <p>Shortcuts stay on this page. Press `/` to search, `1–9` to take a scene.</p>
+          <p className="tagline">Your next demo. One key away.</p>
+        </div>
+      </aside>
+
+      <main className="canvas">
+        <header className="topbar">
+          <label className="search">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
+              <path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <input
+              ref={searchRef}
+              type="search"
+              value={query}
+              placeholder="Search scenes..."
+              aria-label="Search scenes"
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  e.currentTarget.blur();
+                  setQuery('');
+                }
+              }}
+            />
+          </label>
+          <div className="meta">
+            {lamp}
+            <span className="route" data-route={state.route}>
+              {state.route || '/'}
+            </span>
+          </div>
+        </header>
+
+        {progress ? (
+          <div className="progress" data-progress="true">
+            <span />
+            Applying scene
+          </div>
+        ) : null}
+
+        <section className="stats" aria-label="Session">
+          <article className="stat">
+            <div className="stat-icon ice" aria-hidden="true" />
+            <strong>{current?.title ?? 'No scene'}</strong>
+            <span>Live scene</span>
+          </article>
+          <article className="stat">
+            <div className="stat-icon sky" aria-hidden="true" />
+            <strong>{state.route || '/'}</strong>
+            <span>Route</span>
+          </article>
+          <article className="stat">
+            <div className="stat-icon navy" aria-hidden="true" />
+            <strong>{LABELS[state.connection]}</strong>
+            <span>Connection</span>
+          </article>
+          <article className="stat">
+            <div className="stat-icon mint" aria-hidden="true" />
+            <strong>{scenes.length}</strong>
+            <span>Cues in deck</span>
+          </article>
+        </section>
+
+        <section className="card scenes-card">
+          <header className="card-head">
+            <h2>Cue sheet</h2>
+            <span>{currentIndex >= 0 ? `${currentIndex + 1} / ${scenes.length}` : scenes.length}</span>
+          </header>
+          <ol className="scenes">
+            {scenes.map((scene, index) => {
+              const active = scene.id === state.sceneId && state.connection === 'active';
+              const match =
+                !needle ||
+                scene.title.toLowerCase().includes(needle) ||
+                scene.id.toLowerCase().includes(needle) ||
+                String(scene.hotkey ?? index + 1).includes(needle);
+              return (
+                <li key={scene.id} hidden={!match}>
+                  <button
+                    className={active ? 'scene active' : 'scene'}
+                    data-scene-id={scene.id}
+                    data-active={active ? 'true' : 'false'}
+                    onClick={() => sendCommand('SCENE_APPLY', scene.id)}
+                  >
+                    <span className="num">{scene.hotkey ?? String(index + 1)}</span>
+                    <span className="scene-body">
+                      <strong>{scene.title}</strong>
+                      <em>{scene.id}</em>
+                    </span>
+                    {active ? <span className="live">LIVE</span> : <kbd>{scene.hotkey ?? index + 1}</kbd>}
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+
+        <section className="bottom-grid">
+          <div className="card actions-card">
+            <header className="card-head">
+              <h2>Transport</h2>
+            </header>
+            <div className="actions">
+              <button disabled={currentIndex <= 0} data-action="prev" onClick={() => sendCommand('SCENE_APPLY', order[currentIndex - 1])}>
+                Previous
+              </button>
+              <button
+                disabled={currentIndex < 0 || currentIndex >= order.length - 1}
+                data-action="next"
+                onClick={() => sendCommand('SCENE_APPLY', order[currentIndex + 1])}
+              >
+                Next
+              </button>
+              <button className="accent" data-action="replay" disabled={!state.sceneId} onClick={() => state.sceneId && sendCommand('SCENE_APPLY', state.sceneId)}>
+                Replay
+              </button>
+              <button onClick={() => sendCommand('RESET')}>Reset</button>
+            </div>
+          </div>
+
+          <div className="card shortcuts-card">
+            <header className="card-head">
+              <h2>Shortcuts</h2>
+            </header>
+            <ul className="keys">
+              <li>
+                <kbd>1</kbd>–<kbd>9</kbd> Scene
+              </li>
+              <li>
+                <kbd>←</kbd> <kbd>→</kbd> Prev / next
+              </li>
+              <li>
+                <kbd>Space</kbd> Replay
+              </li>
+              <li>
+                <kbd>R</kbd> Reset
+              </li>
+              <li>
+                <kbd>D</kbd> Film
+              </li>
+              <li>
+                <kbd>/</kbd> Search
+              </li>
+              <li>
+                <kbd>Esc</kbd> Exit film
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {diagOpen ? (
+          <section className="card diag-card">
             <div className="diag-panel" data-diagnostics="open">
               {state.diagnostic ? (
                 <p>
@@ -368,12 +496,9 @@ export function App() {
                 </ul>
               )}
             </div>
-          ) : null}
-        </section>
-
-        <p className="keys">1–9 scenes · ← → · space replay · R reset · D film</p>
-        <p className="tagline">Your next demo. One key away.</p>
-      </footer>
-    </main>
+          </section>
+        ) : null}
+      </main>
+    </div>
   );
 }
